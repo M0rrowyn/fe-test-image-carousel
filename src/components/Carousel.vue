@@ -4,7 +4,7 @@
       <slot :currentSlider="currentSlider" />
     </div>
 
-    <div class="navigation">
+    <div v-if="navEnabled" class="navigation">
       <div class="toggle-page left">
         <div @click="prevSlider" class="icon-container">
           <i class="fa-solid fa-chevron-left"></i>
@@ -17,7 +17,7 @@
       </div>
     </div>
 
-    <div class="pagination">
+    <div v-if="paginationEnabled" class="pagination">
       <span
         @click="goToSlide(index)"
         v-for="(slider, index) in getSliderCount"
@@ -31,11 +31,22 @@
 <script>
 import { ref, onMounted } from 'vue';
 export default {
-  setup() {
+  props: ['startAutoPlay', 'timeout', 'navigation', 'pagination'],
+  setup(props) {
     const currentSlider = ref(1);
     const getSliderCount = ref(null);
-    const autoPlayEnabled = ref(true);
-    const timeoutDuration = ref(5000);
+    const autoPlayEnabled = ref(
+      props.startAutoPlay === undefined ? true : props.startAutoPlay
+    );
+    const timeoutDuration = ref(
+      props.timeout === undefined ? 5000 : props.timeout
+    );
+    const paginationEnabled = ref(
+      props.pagination === undefined ? true : props.pagination
+    );
+    const navEnabled = ref(
+      props.navigation === undefined ? true : props.navigation
+    );
 
     const nextSlider = () => {
       if (currentSlider.value === getSliderCount.value) {
@@ -71,7 +82,15 @@ export default {
       getSliderCount.value = document.querySelectorAll('.slider').length;
     });
 
-    return { currentSlider, nextSlider, prevSlider, getSliderCount, goToSlide };
+    return {
+      currentSlider,
+      nextSlider,
+      prevSlider,
+      getSliderCount,
+      goToSlide,
+      paginationEnabled,
+      navEnabled
+    };
   }
 };
 </script>
