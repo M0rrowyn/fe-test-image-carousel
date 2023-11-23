@@ -1,6 +1,12 @@
 <template>
   <div class="app">
-    <Carousel class="carousel" v-slot="{ currentSlider }">
+    <Carousel
+      :navigation="true"
+      :pagination="true"
+      :startAutoPlay="false"
+      class="carousel"
+      v-slot="{ currentSlider }"
+    >
       <Slider v-for="(slider, index) in carouselSliders" :key="index">
         <div v-if="currentSlider === index + 1" class="slider-info">
           <img class="slider-img" :src="slider" />
