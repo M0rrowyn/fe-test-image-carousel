@@ -1,8 +1,8 @@
 <template>
   <div class="app">
-    <Carousel class="carousel">
+    <Carousel class="carousel" v-slot="{ currentSlider }">
       <Slider v-for="(slider, index) in carouselSliders" :key="index">
-        <div class="slider-info">
+        <div v-if="currentSlider === index + 1" class="slider-info">
           <img class="slider-img" :src="slider" />
         </div>
       </Slider>
@@ -22,11 +22,12 @@ export default {
   },
   setup() {
     const carouselSliders = [
-      'https://picsum.photos/id/119/900/400',
-      'https://picsum.photos/id/149/900/400',
-      'https://picsum.photos/id/237/900/400',
-      'https://picsum.photos/id/429/900/400',
-      'https://picsum.photos/id/593/900/400'
+      'https://picsum.photos/id/119/800/400',
+      'https://picsum.photos/id/149/800/400',
+      'https://picsum.photos/id/237/800/400',
+      'https://picsum.photos/id/429/800/400',
+      'https://picsum.photos/id/593/800/400',
+      'https://picsum.photos/id/152/800/400'
     ];
     return { carouselSliders };
   }
@@ -38,9 +39,10 @@ export default {
   position: relative;
   max-height: 100vh;
   height: 100vh;
+  overflow: hidden;
 }
 
-.slide-info {
+.slider-info {
   position: absolute;
   top: 0;
   left: 0;
