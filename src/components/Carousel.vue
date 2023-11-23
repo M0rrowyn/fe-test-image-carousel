@@ -3,17 +3,27 @@
     <div class="carousel">
       <slot :currentSlider="currentSlider" />
     </div>
+
     <div class="navigation">
       <div class="toggle-page left">
-        <div class="icon-container">
-          <i @click="prevSlider" class="fa-solid fa-chevron-left"></i>
+        <div @click="prevSlider" class="icon-container">
+          <i class="fa-solid fa-chevron-left"></i>
         </div>
       </div>
       <div class="toggle-page right">
-        <div class="icon-container">
-          <i @click="nextSlider" class="fa-solid fa-chevron-right"></i>
+        <div @click="nextSlider" class="icon-container">
+          <i class="fa-solid fa-chevron-right"></i>
         </div>
       </div>
+    </div>
+
+    <div class="pagination">
+      <span
+        @click="goToSlide(index)"
+        v-for="(slider, index) in getSliderCount"
+        :key="index"
+        :class="{ active: index + 1 === currentSlider }"
+      ></span>
     </div>
   </div>
 </template>
@@ -41,11 +51,15 @@ export default {
       currentSlider.value -= 1;
     };
 
+    const goToSlide = (index) => {
+      currentSlider.value = index + 1;
+    };
+
     onMounted(() => {
       getSliderCount.value = document.querySelectorAll('.slider').length;
     });
 
-    return { currentSlider, nextSlider, prevSlider };
+    return { currentSlider, nextSlider, prevSlider, getSliderCount, goToSlide };
   }
 };
 </script>
@@ -80,5 +94,30 @@ export default {
   color: #fff;
   border-radius: 50%;
   cursor: pointer;
+}
+
+.pagination {
+  position: absolute;
+  bottom: 24px;
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+}
+
+span {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  cursor: pointer;
+  background-color: #fff;
+  box-shadow:
+    0 1px 3px 0 rgba(0, 0, 0, 0.1),
+    0 1px 2px 0 rgba(0, 0, 0, 0.06);
+}
+
+.active {
+  background-color: rgb(113, 13, 180);
 }
 </style>
