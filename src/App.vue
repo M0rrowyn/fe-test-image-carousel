@@ -41,10 +41,22 @@ export default {
 </script>
 
 <style scoped>
+.app {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f0f0;
+}
+.app {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .carousel {
   position: relative;
-  max-height: 100vh;
-  height: 100vh;
+  width: 800px;
+  height: 400px;
   overflow: hidden;
 }
 
