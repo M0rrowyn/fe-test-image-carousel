@@ -3,7 +3,6 @@
     <div class="carousel">
       <slot :currentSlider="currentSlider" />
     </div>
-
     <div v-if="navEnabled" class="navigation">
       <div class="toggle-page left">
         <div @click="prevSlider" class="icon-container">
@@ -16,7 +15,6 @@
         </div>
       </div>
     </div>
-
     <div v-if="paginationEnabled" class="pagination">
       <span
         @click="goToSlide(index)"
@@ -30,6 +28,7 @@
 
 <script>
 import { ref, onMounted } from 'vue';
+
 export default {
   props: ['startAutoPlay', 'timeout', 'navigation', 'pagination'],
   setup(props) {
@@ -49,18 +48,20 @@ export default {
     );
 
     const nextSlider = () => {
-      if (currentSlider.value === getSliderCount.value) {
+      const totalSlides = getSliderCount.value;
+
+      if (currentSlider.value === totalSlides) {
         currentSlider.value = 1;
-        return;
-      }
+      } else
       currentSlider.value += 1;
     };
 
     const prevSlider = () => {
+      const totalSlides = getSliderCount.value;
+
       if (currentSlider.value === 1) {
-        currentSlider.value = 1;
-        return;
-      }
+        currentSlider.value = totalSlides;
+      } else
       currentSlider.value -= 1;
     };
 
